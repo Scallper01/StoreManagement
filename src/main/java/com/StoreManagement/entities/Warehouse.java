@@ -1,8 +1,9 @@
-package com.StoreManagement.dataAccess;
+package com.StoreManagement.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.io.Serializable;
 import java.util.Collection;
 
 @Entity
@@ -12,12 +13,11 @@ import java.util.Collection;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class warehouse {
+public class Warehouse implements Serializable {
     @Id
     @GeneratedValue (strategy =GenerationType.IDENTITY)
     private Long id;
     private String name;
-    @OneToMany
-    @JoinColumn(name="ID_INVENTORY")
-    private Collection<inventory> inventories;
+    @OneToMany (mappedBy="warehouse")
+    private Collection<Inventory> inventories;
 }

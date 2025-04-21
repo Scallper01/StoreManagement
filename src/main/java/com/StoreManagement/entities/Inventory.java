@@ -1,21 +1,22 @@
-package com.StoreManagement.dataAccess;
+package com.StoreManagement.entities;
 
 import jakarta.persistence.*;
-import org.hibernate.mapping.ToOne;
+
+import java.io.Serializable;
 
 @Entity
 @Table(name = "INVENTORIES")
 
-public class inventory {
+public class Inventory implements Serializable {
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne
     @JoinColumn(name="ID_WAREHOUSE")
-    private warehouse warehouse;
+    private Warehouse warehouse;
     @OneToOne
     @JoinColumn(name="ID_PRODUCT")
-    private product product;
+    private Product product;
     private Integer quantity;
 
 }

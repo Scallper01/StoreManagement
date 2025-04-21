@@ -1,16 +1,20 @@
-package com.StoreManagement.dataAccess;
+package com.StoreManagement.entities;
+
 
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.io.Serializable;
+
 @Entity
-@Table(name="SUPPLIERS")
+@Table(name="CUSTOMERS")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class supplier {
+
+public class Customer implements Serializable {
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Long id;

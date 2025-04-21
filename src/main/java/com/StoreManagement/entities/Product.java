@@ -1,10 +1,9 @@
-package com.StoreManagement.dataAccess;
+package com.StoreManagement.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.Collection;
-import java.util.List;
+import java.io.Serializable;
 
 @Entity
 @Table(name="PRODUCTS")
@@ -13,7 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class product {
+public class Product implements Serializable {
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY )
     private Long id;
@@ -21,5 +20,5 @@ public class product {
     private Double price;
     @ManyToOne
     @JoinColumn(name = "ID_SUPPLIER")
-    private supplier supplier;
+    private Supplier supplier;
 }
