@@ -18,6 +18,6 @@ public class Warehouse implements Serializable {
     @GeneratedValue (strategy =GenerationType.IDENTITY)
     private Long id;
     private String name;
-    @OneToMany (mappedBy="warehouse")
+    @OneToMany (mappedBy = "warehouse", cascade = CascadeType.ALL, orphanRemoval = true)
     private Collection<Inventory> inventories;
 }

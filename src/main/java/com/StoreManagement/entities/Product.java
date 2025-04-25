@@ -18,7 +18,7 @@ public class Product implements Serializable {
     private Long id;
     private String name;
     private Double price;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "ID_SUPPLIER")
     private Supplier supplier;
 }
