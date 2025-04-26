@@ -89,4 +89,14 @@ public class storeController {
             return "{Warning : No Supplier found with"+supplierDTO.getSupplierId()+"}";
         }
     }
+
+    @PostMapping("/customer")
+    public customerDTO addCustomer(@RequestBody customerDTO newCustomer){
+        return service.addCustomer(newCustomer);
+    }
+
+    @GetMapping("/customers")
+    public List<customerDTO> getAllCustomers(){
+        return service.getAllCustomers();
+    }
 }

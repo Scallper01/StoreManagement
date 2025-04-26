@@ -20,4 +20,8 @@ public interface IStoreService {
     public List<supplierDTO> getAllSuppliers();
     public supplierDTO getSupplierById(Long id);
     public supplierDTO editSupplier(supplierDTO supplierDTO);
+
+    //Customer Management
+    public customerDTO addCustomer(customerDTO customerDTO);
+    public List<customerDTO> getAllCustomers();
 }

@@ -19,16 +19,19 @@ public class StoreServiceImpl implements IStoreService {
     private supplierRepository supplierRepository;
     private inventoryRepository inventoryRepository;
     private warehouseRepository warehouseRepository;
+    private customerRepository customerRepository;
 
     @Autowired
     public StoreServiceImpl(productRepository productRepository,
                             supplierRepository supplierRepository,
                             inventoryRepository inventoryRepository,
-                            warehouseRepository warehouseRepository) {
+                            warehouseRepository warehouseRepository,
+                            customerRepository customerRepository) {
         this.productRepository = productRepository;
         this.supplierRepository = supplierRepository;
         this.inventoryRepository = inventoryRepository;
         this.warehouseRepository = warehouseRepository;
+        this.customerRepository = customerRepository;
     }
 
     @Override
@@ -164,6 +167,34 @@ public class StoreServiceImpl implements IStoreService {
                 .supplierId(editedsup.getId())
                 .supplierName(editedsup.getName())
                 .supplierAddress(editedsup.getAddress()).build();
+    }
+
+    @Override
+    public customerDTO addCustomer(customerDTO customerDTO) {
+        Customer customer = Customer.builder()
+                .name(customerDTO.getCustomerName())
+                .address(customerDTO.getCustomerAddress()).build();
+        Customer addedCustomer = customerRepository.save(customer);
+        return customerDTO.builder()
+                .customerId(addedCustomer.getId())
+                .customerName(addedCustomer.getName())
+                .CustomerAddress(addedCustomer.getAddress())
+                .build();
+    }
+
+    @Override
+    public List<customerDTO> getAllCustomers() {
+        List<customerDTO> dto = new ArrayList<>();
+        List<Customer> cus = customerRepository.findAll();
+        for (Customer c: cus){
+            customerDTO dto1 = customerDTO.builder()
+                    .customerId(c.getId())
+                    .customerName(c.getName())
+                    .CustomerAddress(c.getAddress())
+                    .build();
+            dto.add(dto1);
+        }
+        return dto;
     }
 }
 
