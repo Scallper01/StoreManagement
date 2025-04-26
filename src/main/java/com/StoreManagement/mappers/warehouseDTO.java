@@ -14,6 +14,7 @@ import java.util.List;
 @Builder
 public class warehouseDTO {
 
-    private List<inventoryDTO> inventoryDTOS;
+    private String warehouseName;
+    private List<inventoryDTO> warehouseInventory;
 
 }

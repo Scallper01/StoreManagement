@@ -8,10 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @RestController
 public class storeController {
@@ -25,7 +22,7 @@ public class storeController {
 
     @GetMapping("/product/{id}")
     public ResponseEntity<Object> getProductById(@PathVariable Long id) {
-        productDTO product = service.getProductDetails(id);
+        productDTO product = service.getProduct(id);
         if (product == null) {
             System.err.println("Web Layer : Error occurred while fetching product: Product not found");
             Map<String, Object> errorResponse = new HashMap<>();
@@ -39,12 +36,12 @@ public class storeController {
     }
 
     @GetMapping("/products")
-    public ResponseEntity<List<productDTO>> getAllproductsDetails(){
-        return ResponseEntity.ok(service.getAllProductDetails());
+    public ResponseEntity<List<productDTO>> getAllproducts(){
+        return ResponseEntity.ok(service.getAllProduct());
     }
 
     @GetMapping("warehouse/{id}")
-    public List<inventoryDTO> getwarehouseinventory(@PathVariable Long id){
+    public warehouseDTO getwarehouseinventory(@PathVariable Long id){
         return service.getWarehouseInventory(id);
     }
 
@@ -54,8 +51,42 @@ public class storeController {
         return service.addProduct(newprod);
     }
 
+    @PutMapping("/product")
+    public Object editProduct(@RequestBody productDTO productDTO){
+        try {
+            return service.editProduct(productDTO);
+
+        } catch (NoSuchElementException e){
+            return "{ Warning : No product found with id :"+productDTO.getProductId()+"}";
+        }
+    }
+
     @PostMapping("/inventory/{id}")
     public Inventory addProductInventory(@RequestBody inventoryDTO newInventoryDTO, @PathVariable Long id){
         return service.addIventory(newInventoryDTO, id);
+    }
+
+    @GetMapping("suppliers")
+    public List<supplierDTO> getAllSuppliers(){
+        return service.getAllSuppliers();
+    }
+
+    @GetMapping("supplier/{id}")
+    public Object getSupplierById(@PathVariable Long id) {
+        try{
+            return service.getSupplierById(id);
+        } catch (NoSuchElementException e){
+            return "{}";
+        }
+
+    }
+
+    @PutMapping("/supplier")
+    public Object editSupplier(@RequestBody supplierDTO supplierDTO){
+        try {
+            return service.editSupplier(supplierDTO);
+        } catch (NoSuchElementException e){
+            return "{Warning : No Supplier found with"+supplierDTO.getSupplierId()+"}";
+        }
     }
 }
