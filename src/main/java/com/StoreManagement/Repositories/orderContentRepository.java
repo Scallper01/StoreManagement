@@ -1,4 +1,4 @@
-package com.StoreManagement.dataAccess;
+package com.StoreManagement.Repositories;
 
 import com.StoreManagement.entities.OrderContent;
 import org.springframework.data.jpa.repository.JpaRepository;
