@@ -24,6 +24,7 @@ public interface IStoreService {
     public customerDTO addCustomer(customerDTO customerDTO);
     public List<customerDTO> getAllCustomers();
     public customerDTO getCustomerById(Long id);
+    public String deleteCustomerById(Long id);
 
     //Warehouse Management
     public warehouseDTO addWarehouse(warehouseDTO warehouseDTO);

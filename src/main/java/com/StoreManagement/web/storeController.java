@@ -110,6 +110,11 @@ public class storeController {
         return service.getAllCustomers();
     }
 
+    @DeleteMapping("/customer/{id}")
+    public String deleteCustomer(@PathVariable Long id){
+        return service.deleteCustomerById(id);
+    }
+
     @PostMapping("/warehouse")
     public warehouseDTO addWarehouse(@RequestBody warehouseDTO newWarehouse){
         return service.addWarehouse(newWarehouse);

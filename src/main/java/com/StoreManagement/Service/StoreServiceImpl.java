@@ -240,6 +240,18 @@ public class StoreServiceImpl implements IStoreService {
     }
 
     @Override
+    public String deleteCustomerById(Long id) throws NoSuchElementException {
+
+        try {
+            Customer c = customerRepository.findById(id).get();
+            customerRepository.deleteById(id);
+            return "INFO : Customer identified by Id : "+id+" is succeffully deleted";
+        } catch (NoSuchElementException e){
+            return "WARN : No Customer found by Id : "+id;
+        }
+    }
+
+    @Override
     public warehouseDTO addWarehouse(warehouseDTO warehouseDTO) {
         Warehouse wh = warehouseRepository.save(Warehouse.builder().name(warehouseDTO.getWarehouseName()).build());
         return warehouseDTO.builder()
