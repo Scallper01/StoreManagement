@@ -100,7 +100,7 @@ public class StoreServiceImpl implements IStoreService {
     }
 
     @Override
-    public warehouseDTO getWarehouseInventory(Long warehouseId) throws NoSuchElementException {
+    public warehouseDTO getWarehouseContent(Long warehouseId) throws NoSuchElementException {
         List<Inventory> inventories = inventoryRepository.findAll();
         Warehouse wh = warehouseRepository.findById(warehouseId).get();
         List<inventoryDTO> dtos = new ArrayList<>();
@@ -216,6 +216,21 @@ public class StoreServiceImpl implements IStoreService {
                 .warehouseName(wh.getName())
                 .warehouseInventory(new ArrayList<>())
                 .build();
+    }
+
+    @Override
+    public List<warehouseDTO> getAllWarehouses() {
+        List<Warehouse> whs = warehouseRepository.findAll();
+        List<warehouseDTO> dtos = new ArrayList<>();
+        for(Warehouse ws : whs){
+            warehouseDTO dto = warehouseDTO.builder()
+                    .warehouseName(ws.getName())
+                    .warehouseInventory(new ArrayList<>())
+                    .build();
+            dtos.add(dto);
+            dto.setWarehouseInventory(getWarehouseContent(ws.getId()).getWarehouseInventory());
+        }
+        return dtos;
     }
 }
 

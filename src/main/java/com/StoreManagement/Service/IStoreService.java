@@ -13,7 +13,6 @@ public interface IStoreService {
     public List<productDetailsDTO> getAllProduct();
     public Product addProduct(productDetailsDTO newProduct);
     public Inventory addIventory(inventoryDTO inventoryDTO, Long warehouseId);
-    public warehouseDTO getWarehouseInventory(Long warehouseId);
     public productDetailsDTO editProduct(productDetailsDTO productDetailsDTO);
 
     //Supplier Management
@@ -27,4 +26,9 @@ public interface IStoreService {
 
     //Warehouse Management
     public warehouseDTO addWarehouse(warehouseDTO warehouseDTO);
+    public List<warehouseDTO> getAllWarehouses();
+    public warehouseDTO getWarehouseContent(Long warehouseId);
+
+    //to do : Ordering Management
+    //to do : Delivery Management
 }

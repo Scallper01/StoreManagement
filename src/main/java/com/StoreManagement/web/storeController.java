@@ -42,7 +42,7 @@ public class storeController {
 
     @GetMapping("warehouse/{id}")
     public warehouseDTO getwarehouseinventory(@PathVariable Long id){
-        return service.getWarehouseInventory(id);
+        return service.getWarehouseContent(id);
     }
 
 
@@ -103,5 +103,10 @@ public class storeController {
     @PostMapping("/warehouse")
     public warehouseDTO addWarehouse(@RequestBody warehouseDTO newWarehouse){
         return service.addWarehouse(newWarehouse);
+    }
+
+    @GetMapping("/warehouses")
+    public List<warehouseDTO> getAllWarehouses(){
+        return service.getAllWarehouses();
     }
 }
