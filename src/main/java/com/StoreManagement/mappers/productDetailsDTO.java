@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder
-public class productDTO {
+public class productDetailsDTO {
     private Long productId;
     private String productName;
     private Double productPrice;

@@ -9,12 +9,12 @@ import java.util.List;
 public interface IStoreService {
 
     //product Management
-    public productDTO getProduct(Long productId);
-    public List<productDTO> getAllProduct();
-    public Product addProduct(productDTO newProduct);
+    public productDetailsDTO getProduct(Long productId);
+    public List<productDetailsDTO> getAllProduct();
+    public Product addProduct(productDetailsDTO newProduct);
     public Inventory addIventory(inventoryDTO inventoryDTO, Long warehouseId);
     public warehouseDTO getWarehouseInventory(Long warehouseId);
-    public productDTO editProduct(productDTO productDTO);
+    public productDetailsDTO editProduct(productDetailsDTO productDetailsDTO);
 
     //Supplier Management
     public List<supplierDTO> getAllSuppliers();
@@ -24,4 +24,7 @@ public interface IStoreService {
     //Customer Management
     public customerDTO addCustomer(customerDTO customerDTO);
     public List<customerDTO> getAllCustomers();
+
+    //Warehouse Management
+    public warehouseDTO addWarehouse(warehouseDTO warehouseDTO);
 }

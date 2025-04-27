@@ -35,10 +35,10 @@ public class StoreServiceImpl implements IStoreService {
     }
 
     @Override
-    public productDTO getProduct(Long productId) {
+    public productDetailsDTO getProduct(Long productId) {
         try {
             Product product = productRepository.findById(productId).get();
-            return productDTO.builder()
+            return productDetailsDTO.builder()
                     .productName(product.getName())
                     .productId(product.getId())
                     .productPrice(product.getPrice())
@@ -52,24 +52,24 @@ public class StoreServiceImpl implements IStoreService {
     }
 
     @Override
-    public List<productDTO> getAllProduct() {
+    public List<productDetailsDTO> getAllProduct() {
         List<Product> products = productRepository.findAll();
-        List<productDTO> productDTOS = new ArrayList<>();
+        List<productDetailsDTO> productDetailsDTOS = new ArrayList<>();
         for (Product pr : products){
-            productDTO dto = productDTO.builder()
+            productDetailsDTO dto = productDetailsDTO.builder()
                     .productName(pr.getName())
                     .productId(pr.getId())
                     .productPrice(pr.getPrice())
                     .supplierName(pr.getSupplier().getName())
                     .supplierId(pr.getSupplier().getId())
                     .build();
-            productDTOS.add(dto);
+            productDetailsDTOS.add(dto);
         }
-        return productDTOS;
+        return productDetailsDTOS;
     }
 
     @Override
-    public Product addProduct(productDTO newProduct) {
+    public Product addProduct(productDetailsDTO newProduct) {
         Supplier sup = supplierRepository.findById(newProduct.getSupplierId()).get();
         Product product = Product.builder()
                                 .name(newProduct.getProductName())
@@ -119,12 +119,12 @@ public class StoreServiceImpl implements IStoreService {
     }
 
     @Override
-    public productDTO editProduct(productDTO productDTO) throws NoSuchElementException {
-        Product product = productRepository.findById(productDTO.getProductId()).get();
-        product.setName(productDTO.getProductName());
-        product.setPrice(productDTO.getProductPrice());
+    public productDetailsDTO editProduct(productDetailsDTO productDetailsDTO) throws NoSuchElementException {
+        Product product = productRepository.findById(productDetailsDTO.getProductId()).get();
+        product.setName(productDetailsDTO.getProductName());
+        product.setPrice(productDetailsDTO.getProductPrice());
         Product editedProduct = productRepository.save(product);
-        return productDTO.builder()
+        return productDetailsDTO.builder()
                 .productId(editedProduct.getId())
                 .productName(editedProduct.getName())
                 .supplierId(editedProduct.getSupplier().getId())
@@ -141,7 +141,9 @@ public class StoreServiceImpl implements IStoreService {
             supplierDTO dto = supplierDTO.builder()
                     .supplierId(s.getId())
                     .supplierName(s.getName())
-                    .supplierAddress(s.getAddress()).build();
+                    .supplierAddress(s.getAddress())
+                    .supplierProducts(new ArrayList<>())
+                    .build();
             dtos.add(dto);
         }
         return dtos;
@@ -150,10 +152,19 @@ public class StoreServiceImpl implements IStoreService {
     @Override
     public supplierDTO getSupplierById(Long id) throws NoSuchElementException {
         Supplier sup = supplierRepository.findById(id).get();
+        List<Product> prds = productRepository.findBySupplier_Id(id);
         supplierDTO dto = supplierDTO.builder()
                 .supplierId(sup.getId())
                 .supplierName(sup.getName())
-                .supplierAddress(sup.getAddress()).build();
+                .supplierAddress(sup.getAddress())
+                .supplierProducts(new ArrayList<>()).build();
+        for (Product p : prds){
+            productInfo PI = productInfo.builder()
+                    .productId(p.getId())
+                    .productName(p.getName())
+                    .build();
+            dto.getSupplierProducts().add(PI);
+        }
         return dto;
     }
 
@@ -166,7 +177,8 @@ public class StoreServiceImpl implements IStoreService {
         return supplierDTO.builder()
                 .supplierId(editedsup.getId())
                 .supplierName(editedsup.getName())
-                .supplierAddress(editedsup.getAddress()).build();
+                .supplierAddress(editedsup.getAddress())
+                .supplierProducts(new ArrayList<>()).build();
     }
 
     @Override
@@ -195,6 +207,15 @@ public class StoreServiceImpl implements IStoreService {
             dto.add(dto1);
         }
         return dto;
+    }
+
+    @Override
+    public warehouseDTO addWarehouse(warehouseDTO warehouseDTO) {
+        Warehouse wh = warehouseRepository.save(Warehouse.builder().name(warehouseDTO.getWarehouseName()).build());
+        return warehouseDTO.builder()
+                .warehouseName(wh.getName())
+                .warehouseInventory(new ArrayList<>())
+                .build();
     }
 }
 

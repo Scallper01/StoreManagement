@@ -22,7 +22,7 @@ public class storeController {
 
     @GetMapping("/product/{id}")
     public ResponseEntity<Object> getProductById(@PathVariable Long id) {
-        productDTO product = service.getProduct(id);
+        productDetailsDTO product = service.getProduct(id);
         if (product == null) {
             System.err.println("Web Layer : Error occurred while fetching product: Product not found");
             Map<String, Object> errorResponse = new HashMap<>();
@@ -36,7 +36,7 @@ public class storeController {
     }
 
     @GetMapping("/products")
-    public ResponseEntity<List<productDTO>> getAllproducts(){
+    public ResponseEntity<List<productDetailsDTO>> getAllproducts(){
         return ResponseEntity.ok(service.getAllProduct());
     }
 
@@ -47,17 +47,17 @@ public class storeController {
 
 
     @PostMapping("/product")
-    public Product addProd(@RequestBody productDTO newprod){
+    public Product addProd(@RequestBody productDetailsDTO newprod){
         return service.addProduct(newprod);
     }
 
     @PutMapping("/product")
-    public Object editProduct(@RequestBody productDTO productDTO){
+    public Object editProduct(@RequestBody productDetailsDTO productDetailsDTO){
         try {
-            return service.editProduct(productDTO);
+            return service.editProduct(productDetailsDTO);
 
         } catch (NoSuchElementException e){
-            return "{ Warning : No product found with id :"+productDTO.getProductId()+"}";
+            return "{ Warning : No product found with id :"+ productDetailsDTO.getProductId()+"}";
         }
     }
 
@@ -98,5 +98,10 @@ public class storeController {
     @GetMapping("/customers")
     public List<customerDTO> getAllCustomers(){
         return service.getAllCustomers();
+    }
+
+    @PostMapping("/warehouse")
+    public warehouseDTO addWarehouse(@RequestBody warehouseDTO newWarehouse){
+        return service.addWarehouse(newWarehouse);
     }
 }
