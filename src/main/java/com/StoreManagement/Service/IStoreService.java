@@ -11,8 +11,8 @@ public interface IStoreService {
     //product Management
     public productDetailsDTO getProduct(Long productId);
     public List<productDetailsDTO> getAllProduct();
-    public Product addProduct(productDetailsDTO newProduct);
-    public Inventory addIventory(inventoryDTO inventoryDTO, Long warehouseId);
+    public productDetailsDTO addProduct(productDetailsDTO newProduct);
+    public inventoryDTO addIventory(inventoryDTO inventoryDTO, Long warehouseId);
     public productDetailsDTO editProduct(productDetailsDTO productDetailsDTO);
 
     //Supplier Management

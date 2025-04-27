@@ -70,33 +70,52 @@ public class StoreServiceImpl implements IStoreService {
     }
 
     @Override
-    public Product addProduct(productDetailsDTO newProduct) {
+    public productDetailsDTO addProduct(productDetailsDTO newProduct) {
         Supplier sup = supplierRepository.findById(newProduct.getSupplierId()).get();
         Product product = Product.builder()
                                 .name(newProduct.getProductName())
                                 .price(newProduct.getProductPrice())
                                 .supplier(sup)
                                 .build();
-        return productRepository.save(product);
+        Product addedPr = productRepository.save(product);
+        return productDetailsDTO.builder()
+                .productId(addedPr.getId())
+                .productName(addedPr.getName())
+                .productPrice(addedPr.getPrice())
+                .supplierName(addedPr.getSupplier().getName())
+                .supplierId(addedPr.getSupplier().getId())
+                .build();
     }
 
     @Override
-    public Inventory addIventory(inventoryDTO inventoryDTO, Long warehouseId) {
+    public inventoryDTO addIventory(inventoryDTO inventoryDTO, Long warehouseId) {
         Inventory suchInventory = inventoryRepository.findByProduct_IdAndWarehouse_Id(inventoryDTO.getProductId(),warehouseId);
         if (suchInventory!=null){
             Integer newQuantity = suchInventory.getQuantity()+inventoryDTO.getProductQuantity();
             suchInventory.setQuantity(newQuantity);
-            return inventoryRepository.save(suchInventory);
+            inventoryRepository.save(suchInventory);
+            return inventoryDTO.builder()
+                    .productId(suchInventory.getProduct().getId())
+                    .productName(suchInventory.getProduct().getName())
+                    .productQuantity(suchInventory.getQuantity())
+                    .supplierName(suchInventory.getProduct().getSupplier().getName())
+                    .build();
         }
         else {
-            Product product = Product.builder().id(inventoryDTO.getProductId()).build();
-            Warehouse warehouse = Warehouse.builder().id(warehouseId).build();
+            Product product = productRepository.findById(inventoryDTO.getProductId()).get();
+            Warehouse warehouse = warehouseRepository.findById(warehouseId).get();
             Inventory inventory = Inventory.builder()
                     .product(product)
                     .quantity(inventoryDTO.getProductQuantity())
                     .warehouse(warehouse)
                     .build();
-            return inventoryRepository.save(inventory);
+            inventoryRepository.save(inventory);
+            return inventoryDTO.builder()
+                    .productId(inventory.getProduct().getId())
+                    .productName(inventory.getProduct().getName())
+                    .productQuantity(inventory.getQuantity())
+                    .supplierName(inventory.getProduct().getSupplier().getName())
+                    .build();
         }
     }
 

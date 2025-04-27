@@ -47,7 +47,7 @@ public class storeController {
 
 
     @PostMapping("/product")
-    public Product addProd(@RequestBody productDetailsDTO newprod){
+    public productDetailsDTO addProd(@RequestBody productDetailsDTO newprod){
         return service.addProduct(newprod);
     }
 
@@ -62,7 +62,7 @@ public class storeController {
     }
 
     @PostMapping("/inventory/{id}")
-    public Inventory addProductInventory(@RequestBody inventoryDTO newInventoryDTO, @PathVariable Long id){
+    public inventoryDTO addProductInventory(@RequestBody inventoryDTO newInventoryDTO, @PathVariable Long id){
         return service.addIventory(newInventoryDTO, id);
     }
 
