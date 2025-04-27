@@ -26,7 +26,7 @@ public interface IStoreService {
 
     //Warehouse Management
     public warehouseDTO addWarehouse(warehouseDTO warehouseDTO);
-    public List<warehouseDTO> getAllWarehouses();
+    public List<warehouseDTO> getAllWarehouses(String field);
     public warehouseDTO getWarehouseContent(Long warehouseId);
 
     //to do : Ordering Management

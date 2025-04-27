@@ -3,6 +3,7 @@ package com.StoreManagement.Service;
 import com.StoreManagement.Repositories.*;
 import com.StoreManagement.entities.*;
 import com.StoreManagement.mappers.*;
+import jakarta.validation.constraints.AssertTrue;
 import lombok.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -219,7 +220,7 @@ public class StoreServiceImpl implements IStoreService {
     }
 
     @Override
-    public List<warehouseDTO> getAllWarehouses() {
+    public List<warehouseDTO> getAllWarehouses(String field) {
         List<Warehouse> whs = warehouseRepository.findAll();
         List<warehouseDTO> dtos = new ArrayList<>();
         for(Warehouse ws : whs){
@@ -228,7 +229,9 @@ public class StoreServiceImpl implements IStoreService {
                     .warehouseInventory(new ArrayList<>())
                     .build();
             dtos.add(dto);
-            dto.setWarehouseInventory(getWarehouseContent(ws.getId()).getWarehouseInventory());
+            if (field.equals("Yes")){
+                dto.setWarehouseInventory(getWarehouseContent(ws.getId()).getWarehouseInventory());
+            }
         }
         return dtos;
     }

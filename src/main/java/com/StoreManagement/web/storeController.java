@@ -106,7 +106,7 @@ public class storeController {
     }
 
     @GetMapping("/warehouses")
-    public List<warehouseDTO> getAllWarehouses(){
-        return service.getAllWarehouses();
+    public List<warehouseDTO> getAllWarehouses( @RequestParam(name = "warehouseInventory",required = false, defaultValue = "") String field){
+        return service.getAllWarehouses(field);
     }
 }
