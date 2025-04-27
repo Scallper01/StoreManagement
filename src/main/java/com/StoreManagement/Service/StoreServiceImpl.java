@@ -230,6 +230,16 @@ public class StoreServiceImpl implements IStoreService {
     }
 
     @Override
+    public customerDTO getCustomerById(Long id) throws NoSuchElementException {
+        Customer c = customerRepository.findById(id).get();
+        return customerDTO.builder()
+                .customerId(c.getId())
+                .customerName(c.getName())
+                .CustomerAddress(c.getAddress())
+                .build();
+    }
+
+    @Override
     public warehouseDTO addWarehouse(warehouseDTO warehouseDTO) {
         Warehouse wh = warehouseRepository.save(Warehouse.builder().name(warehouseDTO.getWarehouseName()).build());
         return warehouseDTO.builder()

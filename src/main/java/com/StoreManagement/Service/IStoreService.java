@@ -23,6 +23,7 @@ public interface IStoreService {
     //Customer Management
     public customerDTO addCustomer(customerDTO customerDTO);
     public List<customerDTO> getAllCustomers();
+    public customerDTO getCustomerById(Long id);
 
     //Warehouse Management
     public warehouseDTO addWarehouse(warehouseDTO warehouseDTO);

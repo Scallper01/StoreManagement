@@ -61,9 +61,9 @@ public class storeController {
         }
     }
 
-    @PostMapping("/inventory/{id}")
-    public inventoryDTO addProductInventory(@RequestBody inventoryDTO newInventoryDTO, @PathVariable Long id){
-        return service.addIventory(newInventoryDTO, id);
+    @PostMapping("/inventory/{warehouseId}")
+    public inventoryDTO addProductInventory(@RequestBody inventoryDTO newInventoryDTO, @PathVariable Long warehouseId){
+        return service.addIventory(newInventoryDTO, warehouseId);
     }
 
     @GetMapping("suppliers")
@@ -93,6 +93,16 @@ public class storeController {
     @PostMapping("/customer")
     public customerDTO addCustomer(@RequestBody customerDTO newCustomer){
         return service.addCustomer(newCustomer);
+    }
+
+    @GetMapping("customer/{id}")
+    public Object getCustomerDetails(@PathVariable Long id){
+
+        try {
+            return service.getCustomerById(id);
+        } catch (NoSuchElementException e){
+            return "{}";
+        }
     }
 
     @GetMapping("/customers")
