@@ -1,5 +1,6 @@
 package com.StoreManagement.web;
 
+import ch.qos.logback.core.joran.spi.HttpUtil;
 import com.StoreManagement.Service.IStoreService;
 import com.StoreManagement.entities.*;
 import com.StoreManagement.mappers.*;
@@ -38,6 +39,11 @@ public class storeController {
     @GetMapping("/products")
     public ResponseEntity<List<productDetailsDTO>> getAllproducts(){
         return ResponseEntity.ok(service.getAllProduct());
+    }
+
+    @DeleteMapping("/product/{id}")
+    public void deleteProduct(@PathVariable Long id){
+        service.deleteProduct(id);
     }
 
     @GetMapping("warehouse/{id}")

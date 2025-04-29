@@ -154,6 +154,11 @@ public class StoreServiceImpl implements IStoreService {
     }
 
     @Override
+    public void deleteProduct(Long productId) {
+        productRepository.deleteById(productId);
+    }
+
+    @Override
     public List<supplierDTO> getAllSuppliers() {
         List<supplierDTO> dtos = new ArrayList<>();
         List<Supplier> Sup = supplierRepository.findAll();
